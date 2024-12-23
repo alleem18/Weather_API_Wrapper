@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+input {
+  padding: 10px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px;
+}
+
+h2 {
+  margin-top: 20px;
+}
+
+p {
+  font-size: 1.2rem;
+}
