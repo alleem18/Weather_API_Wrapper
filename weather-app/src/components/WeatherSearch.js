@@ -3,11 +3,20 @@ import axios from "axios";
 
 const WeatherSearch = ({ setWeatherData, setIsCached }) => {
   const [city, setCity] = useState("");
+  const [type, setType] = useState("forecast"); // Default to "forecast"
+  const [date1, setDate1] = useState("");
+  const [date2, setDate2] = useState("");
 
   const fetchWeather = async () => {
-    if (!city) return alert("Please enter a city name!");
+    if (!city) {
+      alert("Please enter a city name!");
+      return;
+    }
+
     try {
-      const response = await axios.get(`http://localhost:5000/weather?city=${city}`);
+      const response = await axios.get("http://localhost:5001/weather", {
+        params: { city, type, date1, date2 },
+      });
       setWeatherData(response.data.weather);
       setIsCached(response.data.cached);
     } catch (error) {
@@ -24,6 +33,26 @@ const WeatherSearch = ({ setWeatherData, setIsCached }) => {
         value={city}
         onChange={(e) => setCity(e.target.value)}
       />
+      <select value={type} onChange={(e) => setType(e.target.value)}>
+        <option value="forecast">Forecast</option>
+        <option value="current">Current Weather</option>
+      </select>
+      {type === "forecast" && (
+        <>
+          <input
+            type="date"
+            placeholder="Start Date"
+            value={date1}
+            onChange={(e) => setDate1(e.target.value)}
+          />
+          <input
+            type="date"
+            placeholder="End Date"
+            value={date2}
+            onChange={(e) => setDate2(e.target.value)}
+          />
+        </>
+      )}
       <button onClick={fetchWeather}>Get Weather</button>
     </div>
   );
